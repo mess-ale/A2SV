@@ -4,7 +4,7 @@ class Solution:
         dic = []
         count = 0
         for i in range(0, len(nums)):
-
+            print("overhere")
             if i + 1 <= len(nums) - 1:
                 if nums[i] != 0 and nums[i] == nums[i + 1]:
                     dic.append(2 * nums[i])
