@@ -11,7 +11,6 @@ class Solution:
         def helper(node, cur):
             if not node:
                 return
-
             helper(node.left, cur+node.val)
             helper(node.right, cur+node.val)
             if cur+node.val == targetSum:
@@ -20,7 +19,6 @@ class Solution:
         def dfs(node):
             if not node:
                 return
-
             helper(node, 0)
             dfs(node.left)
             dfs(node.right)
