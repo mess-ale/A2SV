@@ -1,23 +1,29 @@
 class Solution:
     def validPath(self, n: int, edges: List[List[int]], source: int, destination: int) -> bool:
-        viseted = set()
-        def helper(node, graph, des):
-            if node == des:
-                return True
+        parent = list(range(n))
+        rank = [0]*n
+        def find(x):
+            if parent[x] != x:
+                parent[x] = find(parent[x])
+            return parent[x]
 
-            viseted.add(node)
-            for child in graph[node]:
-                if child not in viseted:
-                    if helper(child, graph, des):
-                        return True
+        def union(x, y):
+            rootx = find(x)
+            rooty = find(y)
+            if rootx == rooty:
+                return
 
-            return False
+            if rank[rootx] < rank[rooty]:
+                rootx, rooty = rooty, rootx
 
-        graph = defaultdict(list)
-        for i in edges:
-            graph[i[0]].append(i[1])
-            graph[i[1]].append(i[0])
+            parent[rooty] = rootx
+            if rank[rootx] == rank[rooty]:
+                rank[rootx] += 1
 
-        if helper(source, graph, destination):
-            return True
-        return False
+        def connected(x, y):
+            return find(x) == find(y)
+
+        for i, j in edges:
+            union(i, j)
+
+        return connected(source, destination)
